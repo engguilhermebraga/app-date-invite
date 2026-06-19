@@ -1,0 +1,828 @@
+
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap");
+
+:root {
+  font-family: "Fredoka", system-ui, sans-serif;
+  background: #110505;
+  color: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #110505;
+  color: #ffffff;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+*::selection {
+  background: #ff7eb3;
+  color: #ffffff;
+}
+
+/* ==========================================
+   LAYOUT PRINCIPAL
+========================================== */
+
+.app-root {
+  width: 100%;
+  min-height: 100svh;
+  padding: 24px;
+
+  background:
+    radial-gradient(circle at top, rgba(179, 27, 27, 0.38), transparent 42%),
+    #110505;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.app-stage {
+  position: relative;
+
+  width: min(100%, 440px);
+  min-height: min(760px, calc(100svh - 48px));
+  max-height: calc(100svh - 48px);
+
+  padding: 82px 22px 36px;
+
+  border-radius: 36px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 50% 8%, rgba(255, 126, 179, 0.16), transparent 30%),
+    linear-gradient(135deg, #801313 0%, #b31b1b 48%, #4a0909 100%);
+
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.62),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.app-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.06),
+      transparent 24%,
+      transparent 76%,
+      rgba(0, 0, 0, 0.18)
+    );
+
+  z-index: 1;
+}
+
+.music-button {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  z-index: 80;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.34);
+  color: rgba(255, 255, 255, 0.84);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.music-button:hover {
+  background: rgba(0, 0, 0, 0.52);
+  color: #ffffff;
+  transform: translateY(-1px) scale(1.03);
+}
+
+.music-button:active {
+  transform: scale(0.94);
+}
+
+/* Esta é a área que centraliza a tela atual */
+.screen-stage {
+  position: relative;
+  z-index: 10;
+
+  flex: 1;
+  min-height: 0;
+
+  width: 100%;
+  max-width: 370px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.screen-stage::-webkit-scrollbar {
+  display: none;
+}
+
+.screen-stage > * {
+  width: 100%;
+}
+
+/* ==========================================
+   COMPATIBILIDADE COM TELAS ANTIGAS
+========================================== */
+
+.date-screen,
+.screen-shell,
+.screen-shell-loose {
+  width: 100%;
+  height: auto;
+  min-height: auto;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================
+   CARDS
+========================================== */
+
+.date-card,
+.date-card-compact {
+  width: 100%;
+  max-width: 340px;
+  max-height: 100%;
+
+  padding: 28px 24px;
+  border-radius: 32px;
+
+  background: rgba(42, 4, 11, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.date-card::-webkit-scrollbar,
+.date-card-compact::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==========================================
+   CONVITE INICIAL
+========================================== */
+
+.invite-card {
+  text-align: center;
+}
+
+.invite-emoji {
+  font-size: 82px;
+  line-height: 1;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.55));
+  animation: softPulse 2s ease-in-out infinite;
+}
+
+.invite-title {
+  margin: 0 0 32px;
+  color: #ffffff;
+
+  font-size: 24px;
+  line-height: 1.18;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.055em;
+}
+
+.invite-title span {
+  color: #ff7eb3;
+}
+
+.invite-actions {
+  width: 100%;
+  display: flex;
+  gap: 14px;
+}
+
+/* ==========================================
+   BOTÕES
+========================================== */
+
+.primary-btn {
+  width: 100%;
+  min-height: 48px;
+
+  padding: 14px 18px;
+  border: none;
+  border-radius: 999px;
+
+  background: linear-gradient(180deg, #ff5a36 0%, #d63a18 100%);
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  box-shadow: 0 10px 20px rgba(214, 58, 24, 0.28);
+  border-bottom: 4px solid #8c220f;
+
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease,
+    border-bottom-width 0.18s ease;
+}
+
+.primary-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.primary-btn:active {
+  transform: translateY(2px) scale(0.98);
+  border-bottom-width: 0;
+}
+
+.primary-btn:disabled {
+  background: rgba(0, 0, 0, 0.48);
+  color: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.06);
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.secondary-btn {
+  width: 100%;
+  min-height: 44px;
+
+  padding: 12px 20px;
+  border-radius: 999px;
+
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.instagram-btn {
+  width: 100%;
+  min-height: 48px;
+
+  padding: 12px 20px;
+  border: none;
+  border-radius: 999px;
+
+  background: linear-gradient(90deg, #e1306c 0%, #c13584 100%);
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  box-shadow: 0 0 20px rgba(225, 48, 108, 0.4);
+  border-bottom: 4px solid #8a1a40;
+}
+
+/* ==========================================
+   GRID DE ESCOLHAS
+========================================== */
+
+.choice-grid {
+  width: 100%;
+  max-height: min(44svh, 360px);
+  margin-bottom: 24px;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.choice-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.choice-card {
+  min-height: 96px;
+
+  padding: 12px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.055);
+  border: 2px solid rgba(255, 255, 255, 0.055);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.choice-card.selected {
+  border-color: #ff7eb3;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 126, 179, 0.22),
+    rgba(255, 65, 108, 0.18)
+  );
+  box-shadow: 0 0 15px rgba(255, 126, 179, 0.3);
+}
+
+.choice-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.6));
+}
+
+.choice-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.choice-card.selected .choice-label {
+  color: #ff7eb3;
+}
+
+/* ==========================================
+   TEXTOS PADRÃO
+========================================== */
+
+.screen-title {
+  margin: 0;
+  color: #ffffff;
+
+  font-size: 20px;
+  line-height: 1.18;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.screen-subtitle {
+  margin: 6px 0 0;
+
+  color: rgba(255, 255, 255, 0.52);
+
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.pink-label {
+  color: #ff7eb3;
+
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ==========================================
+   ANIMAÇÕES
+========================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes softPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.04);
+    opacity: 0.86;
+  }
+}
+
+/* ==========================================
+   RESPONSIVO
+========================================== */
+
+@media (max-width: 640px) {
+  .app-root {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .app-stage {
+    width: 100%;
+    min-height: 100svh;
+    max-height: none;
+
+    padding: 76px 18px 28px;
+
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .music-button {
+    top: 18px;
+    right: 18px;
+  }
+
+  .screen-stage {
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 380px) {
+  .app-stage {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .date-card,
+  .date-card-compact {
+    padding: 24px 18px;
+  }
+
+  .invite-title {
+    font-size: 21px;
+  }
+
+  .invite-emoji {
+    font-size: 72px;
+  }
+
+  .primary-btn {
+    padding-inline: 12px;
+    font-size: 12px;
+  }
+
+  .choice-card {
+    min-height: 86px;
+  }
+
+  .choice-icon {
+    font-size: 34px;
+  }
+}
+
+@media (max-height: 680px) {
+  .app-stage {
+    padding-top: 64px;
+    padding-bottom: 22px;
+  }
+
+  .music-button {
+    top: 14px;
+  }
+
+  .date-card,
+  .date-card-compact {
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+
+  .invite-emoji {
+    font-size: 68px;
+    margin-bottom: 18px;
+  }
+
+  .invite-title {
+    margin-bottom: 24px;
+  }
+}
+```css
+/* ==========================================
+   FOOD SCREEN
+========================================== */
+
+.food-card {
+  max-width: 380px;
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.food-header {
+  width: 100%;
+  margin-bottom: 22px;
+  flex-shrink: 0;
+}
+
+.food-title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 23px;
+  line-height: 1.1;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.food-title span {
+  display: inline-block;
+  animation: softPulse 1.8s ease-in-out infinite;
+}
+
+.food-subtitle {
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.food-grid {
+  width: 100%;
+  max-height: min(430px, 52svh);
+  margin-bottom: 24px;
+  padding: 2px;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.food-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.food-option {
+  min-height: 104px;
+  padding: 14px 10px;
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.food-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.food-option:active {
+  transform: scale(0.96);
+}
+
+.food-option.selected {
+  border-color: #ff7eb3;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 126, 179, 0.22),
+    rgba(255, 65, 108, 0.18)
+  );
+  box-shadow: 0 0 18px rgba(255, 126, 179, 0.32);
+}
+
+.food-icon {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.55));
+  transition: transform 0.22s ease;
+}
+
+.food-option.selected .food-icon {
+  transform: scale(1.12) translateY(-3px);
+}
+
+.food-label {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.food-option.selected .food-label {
+  color: #ff7eb3;
+}
+```css
+/* ==========================================
+   FLOATING HEARTS — FUNDO ANIMADO
+========================================== */
+
+.floating-hearts {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.floating-heart {
+  position: absolute;
+  color: rgba(0, 0, 0, 0.38);
+
+  animation-name: floatHeart;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.5));
+  will-change: transform, opacity;
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(-55vh) rotate(180deg) scale(1.12);
+    opacity: 0.85;
+  }
+
+  90% {
+    opacity: 0.85;
+  }
+
+  100% {
+    transform: translateY(-120vh) rotate(400deg) scale(1.25);
+    opacity: 0;
+  }
+}
+
+
+/* ==========================================
+   AJUSTES PARA CELULAR BAIXO
+========================================== */
+
+@media (max-height: 720px) {
+  .food-card {
+    padding: 22px 18px;
+  }
+
+  .food-header {
+    margin-bottom: 16px;
+  }
+
+  .food-title {
+    font-size: 20px;
+  }
+
+  .food-grid {
+    gap: 10px;
+    max-height: min(390px, 50svh);
+    margin-bottom: 18px;
+  }
+
+  .food-option {
+    min-height: 84px;
+    border-radius: 18px;
+  }
+
+  .food-icon {
+    font-size: 32px;
+    margin-bottom: 7px;
+  }
+
+  .food-label {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 380px) {
+  .food-grid {
+    gap: 10px;
+  }
+
+  .food-option {
+    min-height: 88px;
+    padding: 10px 8px;
+  }
+
+  .food-icon {
+    font-size: 34px;
+  }
+}
