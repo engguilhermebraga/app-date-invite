@@ -38,7 +38,7 @@ Instalação
 
 Clona este repositório:
 
-git clone [https://github.com/TEU_USUARIO/app-date.git](https://github.com/TEU_USUARIO/app-date.git)
+git clone https://github.com/TEU_USUARIO/app-date.git
 
 
 Acede à pasta do projeto:
