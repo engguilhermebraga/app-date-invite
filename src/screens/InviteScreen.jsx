@@ -9,7 +9,7 @@ const InviteScreen = ({ onYes, onNo }) => {
       </div>
 
       <h1 className="invite-title">
-        <span>Camila,</span>
+        <span>Tais,</span>
         <br />
         você aceitaria ir a um date comigo?
       </h1>
