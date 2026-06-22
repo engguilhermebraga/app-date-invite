@@ -59,7 +59,7 @@ const FinalScreen = ({ date, time, food, vibe }) => {
           </div>
         </div>
 
-        <div className="date-card overflow-hidden shrink-0">
+        <div className="date-card relative overflow-hidden shrink-0">
           <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#ff416c] to-[#ff4b2b]"></div>
           
           <h2 className="text-white text-xl font-bold mb-1 text-center leading-tight">Ta marcado.<br/>Só vem. 🍷</h2>
