@@ -109,7 +109,7 @@ const AnnoyingScreen = ({ onYes, onChaos }) => {
 
       <div ref={cardRef} className="date-card z-20">
         <h1 className="text-white text-[24px] font-bold mb-10 text-center uppercase tracking-wide leading-tight">
-          <span className="text-[#ff7eb3]">Camila,</span>
+          <span className="text-[#ff7eb3]">Tais,</span>
           <br />
           você aceitaria ir a um date comigo?
         </h1>
