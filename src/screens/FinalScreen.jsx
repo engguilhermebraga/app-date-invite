@@ -1,8 +1,8 @@
 import  { useState } from 'react';
-import { CalendarHeart, Clock, Instagram, Copy } from 'lucide-react';
+import { CalendarHeart, Clock } from 'lucide-react';
 
 const FinalScreen = ({ date, time, food, vibe }) => {
-  const [copied, setCopied] = useState(false);
+  const [copied] = useState(false);
   
   const formatExtensiveDate = (d) => {
     if (!d) return '';
@@ -14,37 +14,24 @@ const FinalScreen = ({ date, time, food, vibe }) => {
   const foodData = { 'podrao': { i: '🍔', l: 'Podrão' }, 'chique': { i: '🍷', l: 'Jantar Chique' }, 'pizza': { i: '🍕', l: 'Pizza' }, 'sushi': { i: '🍣', l: 'Japonês' }, 'mexicano': { i: '🌮', l: 'Mexicano' }, 'boteco': { i: '🍟', l: 'Boteco' }, 'cafe': { i: '☕', l: 'Café' }, 'surpresa': { i: '🎁', l: 'Surpresa' } }[food] || { i: '🍽️', l: food };
   const vibeData = { 'drinks': { i: '🍸', l: 'Drinks' }, 'filminho': { i: '🍿', l: 'Filminho' }, 'karaoke': { i: '🎤', l: 'Karaoke' }, 'passeio': { i: '🌙', l: 'Passeio' }, 'jogos': { i: '🎳', l: 'Jogos' }, 'role': { i: '🎲', l: 'Aleatório' } }[vibe] || { i: '✨', l: vibe };
 
-  const fallbackCopyTextToClipboard = (text) => {
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    textArea.style.position = "fixed";
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    // eslint-disable-next-line no-unused-vars
-    try { document.execCommand('copy'); } catch (err) { /* empty */ }
-    document.body.removeChild(textArea);
-  };
+const handleWhatsAppSend = () => {
+  const msg = `Oii! Confirmei o nosso date VIP! 🥰
 
-  const handleInstagramSend = () => {
-    const msg = `Oii! Confirmei o nosso date VIP! 🥰\n\n🗓️ *Data:* ${formatExtensiveDate(date)}\n⏰ *Hora:* ${time}\n🍽️ *Menu:* ${foodData.l}\n✨ *Vibe:* ${vibeData.l}\n\nO plano tá perfeito. Só vem! 🍷`;
-    
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(msg).then(triggerRedirect);
-    } else {
-      fallbackCopyTextToClipboard(msg);
-      triggerRedirect();
-    }
-  };
+🗓️ *Data:* ${formatExtensiveDate(date)}
+⏰ *Hora:* ${time}
+🍽️ *Menu:* ${foodData.l}
+✨ *Vibe:* ${vibeData.l}
 
-  const triggerRedirect = () => {
-    setCopied(true);
-    const instagramUser = "engguilhermebr"; // COLOQUE SEU INSTAGRAM AQUI
-    setTimeout(() => { 
-      window.open(`https://www.instagram.com/${instagramUser}/`, '_blank'); 
-      setCopied(false); 
-    }, 2000);
-  };
+O plano tá perfeito. Só vem! 🍷`;
+
+  // 55 + DDD + número, somente dígitos
+  const whatsappNumber = "5598981765223";
+
+  const whatsappUrl =
+    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
+
+  globalThis.location.href = whatsappUrl;
+};
 
   return (
     <div className="date-screen animate-fade-in">
@@ -72,8 +59,8 @@ const FinalScreen = ({ date, time, food, vibe }) => {
             <div className="flex justify-between items-center"><div className="flex items-center gap-2"><span className="text-sm">{vibeData.i}</span><span className="text-white/60 text-[10px] uppercase tracking-wider font-bold">Vibe</span></div><span className="text-white font-bold text-xs">{vibeData.l}</span></div>
           </div>
 
-          <button onClick={handleInstagramSend} className="primary-btn">
-            {copied ? <><Copy size={16}/> COPIADO!</> : <><Instagram size={16}/> MANDAR NO INSTA</>}
+         <button onClick={handleWhatsAppSend} className="primary-btn">
+            MANDAR NO WHATSAPP
           </button>
           {copied && <p className="text-[10px] text-white/60 mt-3 text-center font-semibold">Cole no meu direct! Abrindo Instagram...</p>}
         </div>
