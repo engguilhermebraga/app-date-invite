@@ -25,7 +25,7 @@ const handleWhatsAppSend = () => {
 O plano tá perfeito. Só vem! 🍷`;
 
   // 55 + DDD + número, somente dígitos
-  const whatsappNumber = "5598981765223";
+  const whatsappNumber = "55989891765223";
 
   const whatsappUrl =
     `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
